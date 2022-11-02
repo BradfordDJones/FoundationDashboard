@@ -1,0 +1,63 @@
+﻿@inherits BlazorServerTemplate.Shared.MainLayoutComponent
+
+<PageTitle>Radzen Controls Template</PageTitle>
+
+@using Radzen
+@using Radzen.Blazor
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
+
+<RadzenLayout>
+    <ChildContent>
+        <RadzenHeader id="troutman-gradient-blue">
+            <ChildContent>
+                <div class="row justify-content-start align-items-center">
+                    <div class="col-6 d-flex align-items-center troutman-header-margin">
+                        <RadzenSidebarToggle Click="@SidebarToggle0Click" id="troutman-blue">
+                        </RadzenSidebarToggle>
+                        <RadzenLabel Text="ComponentTesting">
+                        </RadzenLabel>
+                    </div>
+                    <div class="col-6" style="text-align: right;">
+                        <img src="images/logo-normal.svg" style="height:50px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8" style="text-align: right; height:30px; background-color:#742364">
+                    </div>
+                    <div class="col-4" style="text-align: right; height:30px; background-color:#742364">
+                        <img src="assets/images/UserIcon.png" style="height:25px" />
+                        <span style="padding-left:10px;padding-right:20px;color:white">@Globals.CurrentUser</span>
+                    </div>
+
+                </div>
+            </ChildContent>
+        </RadzenHeader>
+        <RadzenBody @ref="body0">
+            <ChildContent>
+                <RadzenContentContainer Name="main">
+                    @Body
+                </RadzenContentContainer>
+            </ChildContent>
+        </RadzenBody>
+        <RadzenSidebar @ref="sidebar0">
+            <ChildContent>
+                <RadzenPanelMenu style="height: 100%; background-color: #346abd;">
+                        <ChildContent>
+                        <RadzenPanelMenuItem Text="Index" Path="/"  />
+                        <RadzenPanelMenuItem Text="Counter" Path="/counter" />
+                        <RadzenPanelMenuItem Text="Control Test Host" Path="/controltesthost" />
+                    </ChildContent>
+                    </RadzenPanelMenu>
+            </ChildContent>
+        </RadzenSidebar>
+        <RadzenFooter id="troutman-blue-footer">
+            <ChildContent>
+                <RadzenLabel Text="Ⓒ2022 Troutman Pepper Hamilton Sanders LLP. All Rights Reserved.">
+                </RadzenLabel>
+            </ChildContent>
+        </RadzenFooter>
+    </ChildContent>
+</RadzenLayout>

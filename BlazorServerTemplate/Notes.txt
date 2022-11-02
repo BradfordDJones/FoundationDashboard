@@ -1,0 +1,12 @@
+﻿    <link rel="icon" type="image/png" sizes="32x32" href="https://www.troutman.com/images/favicons/favicon-32x32.png?v2">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.troutman.com/images/favicons/favicon-16x16.png?v2">
+
+
+
+
+    background-image: linear-gradient(30deg, #346abd, #0091da);
+
+
+
+                            <RadzenPanelMenuItem Text="Index" Path="/" class="troutman-sidebar-selected-item-blue" />
+                        <RadzenPanelMenuItem Text="Counter" Path="/counter" class="troutman-sidebar-unselected-item-blue" />
