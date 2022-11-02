@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 //using ExpenseReclass;
 //using ExpenseReclass.Pages;
 using Radzen;
+using BlazorServerTemplate.Data;
 
 namespace BlazorServerTemplate.Services
 {
@@ -21,6 +22,7 @@ namespace BlazorServerTemplate.Services
     {
 //        protected ExpenseReclassDbService expenseReclassDb;
  //       protected MasterDataDbService masterDataDb;
+        protected BucketDbService bucketDbService;
         protected NotificationService notificationSvc;
 
         #region static properties
@@ -99,10 +101,12 @@ namespace BlazorServerTemplate.Services
 
         public GlobalsService(
             //ExpenseReclassDbService expenseReclassDb, MasterDataDbService masterDataDb,
+            BucketDbService bucketDbService,
             NotificationService notificationSvc)
         {
-//            this.expenseReclassDb = expenseReclassDb;
-//            this.masterDataDb = masterDataDb;
+            //            this.expenseReclassDb = expenseReclassDb;
+            //            this.masterDataDb = masterDataDb;
+            this.bucketDbService = bucketDbService;
             this.notificationSvc = notificationSvc;
         }
 
@@ -110,7 +114,8 @@ namespace BlazorServerTemplate.Services
         #region static methods
         public static void Init(
             //MasterDataDbService masterDataDbService, ExpenseReclassDbService expenseReclassDb,
-            IConfiguration config)
+            IConfiguration config
+            )
         {
             if (ConnectionStrings == null )
             {
@@ -121,5 +126,10 @@ namespace BlazorServerTemplate.Services
             }
         }
         #endregion
+
+        public async Task<BucketDuration[]> GetDurationsAsync()
+        {
+            return await bucketDbService.GetFoundationJobDurationsAsync();
+        }
     }
 }

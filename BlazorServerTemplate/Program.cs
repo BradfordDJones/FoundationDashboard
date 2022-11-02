@@ -32,6 +32,7 @@ namespace BlazorServerTemplate
             builder.Services.AddScoped<TooltipService>();
             builder.Services.AddScoped<ContextMenuService>();
             builder.Services.AddScoped<GlobalsService>();
+            builder.Services.AddScoped<BucketDbService>();
 
 
 

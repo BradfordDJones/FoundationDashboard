@@ -1,0 +1,40 @@
+﻿@page "/bucketdashboard"
+
+<PageTitle>Foundation Dashboard</PageTitle>
+
+@*
+    @using BlazorServerTemplate.Services
+    @using BlazorServerTemplate.Data
+    @inject GlobalsService globalService
+*@
+<h1>Dashboard</h1>
+
+
+@if (durations == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LogID</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var duration in durations)
+            {
+                <tr>
+                    <td>@duration.StartLogID</td>
+                    <td>@duration.StartTime</td>
+                    <td>@duration.EndTime</td>
+                    <td>@duration.Duration</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

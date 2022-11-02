@@ -55,7 +55,8 @@ namespace BlazorServerTemplate.Shared
             Globals.CurrentUserName = state.User.Identity.Name;
             GlobalsService.Init(
                 //MasterDataDb, ExpenseReclassDb,
-                Config);
+                Config
+                );
         }
     }
 }
