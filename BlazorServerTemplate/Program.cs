@@ -1,9 +1,10 @@
 using BlazorServerTemplate.Data;
 using BlazorServerTemplate.Services;
 using Microsoft.AspNetCore.Authentication.Negotiate;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
 using Radzen;
+
 
 namespace BlazorServerTemplate
 {
@@ -25,15 +26,26 @@ namespace BlazorServerTemplate
 
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
-            builder.Services.AddSingleton<WeatherForecastService>();
 
+            //Radzen
             builder.Services.AddScoped<DialogService>();
             builder.Services.AddScoped<NotificationService>();
             builder.Services.AddScoped<TooltipService>();
             builder.Services.AddScoped<ContextMenuService>();
-            builder.Services.AddScoped<GlobalsService>();
-            builder.Services.AddScoped<BucketDbService>();
 
+            //local databases
+            builder.Services.AddScoped<GlobalsService>();
+            builder.Services.AddScoped<AppsDbService>();
+            builder.Services.AddScoped<MasterDataDbService>();
+
+            builder.Services.AddDbContext<MasterDataDbContextOld>(options => {
+                options.UseSqlServer("Data Source=MasterDataTSTDB;Initial Catalog=TSMDD;Trusted_Connection=True;");});
+
+            builder.Services.AddDbContext<FoundationTSContext>(options => {
+                options.UseSqlServer("Data Source=MasterDataTSTDB;Initial Catalog=FoundationTS;Trusted_Connection=True;");});
+
+            builder.Services.AddDbContext<AppsDbContext>(options => {
+                options.UseSqlServer("Data Source=AppsTSTDB;Initial Catalog=Bucket;Trusted_Connection=True;");});
 
 
             var app = builder.Build();

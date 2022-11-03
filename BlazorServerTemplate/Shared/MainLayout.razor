@@ -24,14 +24,13 @@
                         <img src="images/logo-normal.svg" style="height:50px;" />
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-8" style="text-align: right; height:30px; background-color:#742364">
+                <div class="row" style="height:40px; background-color:#742364; align: right;">
+                    <div class="col-8">
                     </div>
-                    <div class="col-4" style="text-align: right; height:30px; background-color:#742364">
-                        <img src="assets/images/UserIcon.png" style="height:25px" />
-                        <span style="padding-left:10px;padding-right:20px;color:white">@Globals.CurrentUser</span>
+                    <div class="col-4" style="display: inline-block; text-align: right; width: 100%">
+                        <img src="@Globals.DataImage" style="height:35px; border-radius: 50%;" />
+                        <span style="padding-left:10px;padding-right:30px;color:white">@Globals.LoggedInUserName</span>
                     </div>
-
                 </div>
             </ChildContent>
         </RadzenHeader>
@@ -50,6 +49,7 @@
                         <RadzenPanelMenuItem Text="Counter" Path="/counter" />
                         <RadzenPanelMenuItem Text="Control Test Host" Path="/controltesthost" />
                         <RadzenPanelMenuItem Text="Dashboard" Path="/bucketdashboard" />
+                        <RadzenPanelMenuItem Text="Process Charts" Path="/processcharts" />
                     </ChildContent>
                     </RadzenPanelMenu>
             </ChildContent>

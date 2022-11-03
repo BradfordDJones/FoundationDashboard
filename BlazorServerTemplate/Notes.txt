@@ -10,3 +10,17 @@
 
                             <RadzenPanelMenuItem Text="Index" Path="/" class="troutman-sidebar-selected-item-blue" />
                         <RadzenPanelMenuItem Text="Counter" Path="/counter" class="troutman-sidebar-unselected-item-blue" />
+
+
+
+"Data Source=MasterDataTSTDB;Initial Catalog=FoundationTS;Persist Security Info=True;User ID=tsnetagent;Password=tsnetagent" 
+
+
+
+Scaffold-DbContext "Data Source=MasterDataTSTDB;Initial Catalog=FoundationTS;Integrated Security=SSPI;Persist Security Info=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+Scaffold-DbContext "Data Source=APPSTSTDB;Initial Catalog=Bucket;Integrated Security=SSPI;Persist Security Info=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+Scaffold-DbContext "Server= Monster;Database=AttorneyCharts;Trusted_Connection=True;" 
+Microsoft.EntityFrameworkCore.SqlServer -OutputDir 
+Models -Tables Clients, Matters, MatterTypes, Persons, PracticeTeams, TimeEntries

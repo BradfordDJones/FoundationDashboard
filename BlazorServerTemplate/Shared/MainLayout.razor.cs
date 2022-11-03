@@ -9,6 +9,7 @@ using Radzen.Blazor;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
 using BlazorServerTemplate.Services;
+using System.Net.WebSockets;
 
 namespace BlazorServerTemplate.Shared
 {
@@ -20,6 +21,9 @@ namespace BlazorServerTemplate.Shared
 
         [Inject]
         protected GlobalsService Globals { get; set; }
+
+        [Inject]
+        protected MasterDataDbService MasterDataDb { get; set; }
 
         [Inject]
         protected IConfiguration Config { get; set; }
@@ -52,9 +56,10 @@ namespace BlazorServerTemplate.Shared
         protected override async System.Threading.Tasks.Task OnInitializedAsync()
         {
             AuthenticationState state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            Globals.CurrentUserName = state.User.Identity.Name;
+            Globals.LoggedInUserID = state.User.Identity.Name;
             GlobalsService.Init(
-                //MasterDataDb, ExpenseReclassDb,
+                MasterDataDb,
+                //, ExpenseReclassDb,
                 Config
                 );
         }

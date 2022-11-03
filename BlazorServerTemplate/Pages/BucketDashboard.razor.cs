@@ -1,4 +1,4 @@
-﻿using BlazorServerTemplate.Data;
+﻿using BlazorServerTemplate.Models.AppsDb;
 using BlazorServerTemplate.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -7,19 +7,13 @@ namespace BlazorServerTemplate.Pages
     public partial class BucketDashboard : ComponentBase
     {
         [Inject]
-        protected GlobalsService? Globals { get; set; }
+        protected AppsDbService? appsDbService { get; set; }
 
-        private BucketDuration[]? durations;
-//        private WeatherForecast[]? forecasts;
+        private BucketAppEventLog[]? durations;
 
         protected override async Task OnInitializedAsync()
         {
-//            await Task.Run(() => { });
-
-            durations = await Globals.GetDurationsAsync();
-//            forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-
+            durations = await appsDbService?.GetFoundationJobDurationsAsync();
         }
-
     }
 }
