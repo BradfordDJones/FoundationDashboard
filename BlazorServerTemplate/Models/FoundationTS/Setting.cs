@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BlazorServerTemplate.Models
+namespace BlazorServerTemplate.Models.FoundationTS
 {
     public partial class Setting
     {

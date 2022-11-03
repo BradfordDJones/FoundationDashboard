@@ -1,21 +1,46 @@
-using BlazorServerTemplate.Models.AppsDb;
-using Radzen;
-using System.Collections;
-using System.Configuration;
+using System;
+using System.Web;
+using System.Threading.Tasks;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Net.Http;
+using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
+using System.Configuration;
+using System.Collections;
+using System.Collections.Generic;
+using Radzen;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Components;
+using BlazorServerTemplate.Data;
 
 namespace BlazorServerTemplate.Services
 {
     public partial class GlobalsService
     {
-        protected MasterDataDbService masterDataDbService;
-        protected AppsDbService appsDbService;
+        protected BucketService bucketService;
+        protected TSMDDService tSMDDService;
+        protected FoundationTSService foundationTSService;
         protected NotificationService notificationSvc;
+
+        public GlobalsService(  BucketService bucketService,
+                                FoundationTSService foundationTSService,
+                                TSMDDService masterDataDbService,
+                                NotificationService notificationSvc)
+        {
+            this.tSMDDService = masterDataDbService;
+            this.foundationTSService = foundationTSService;
+            this.bucketService = bucketService;
+            this.notificationSvc = notificationSvc;
+        }
+
 
         #region ADIdentity
 
-        public DirectoryEntry directoryEntry { get; set; }
+        public DirectoryEntry? directoryEntry { get; set; }
 
         private string? loggedInUserID = null;
         public string? LoggedInUserID
@@ -37,7 +62,7 @@ namespace BlazorServerTemplate.Services
         }
 
         private string? loggedInUserName = null;
-        public string LoggedInUserName 
+        public string? LoggedInUserName 
         {
             get
             {
@@ -59,7 +84,7 @@ namespace BlazorServerTemplate.Services
         }
 
         private List<string>? userADGroups = null;
-        public List<string> UserADGroups
+        public List<string>? UserADGroups
         {
             get
             {
@@ -75,7 +100,7 @@ namespace BlazorServerTemplate.Services
         {
             get
             {
-                byte[] data = UserADDirectoryEntry.Properties["thumbnailPhoto"].Value as byte[];
+                byte[]? data = UserADDirectoryEntry?.Properties["thumbnailPhoto"]?.Value as byte[];
                 if (data != null)
                 {
                     return String.Format("data:image/png;base64,{0}", Convert.ToBase64String(data));
@@ -85,48 +110,35 @@ namespace BlazorServerTemplate.Services
         }
 
         // return if user is in any of 1 or more groups or usernames separated by commas (,)
-        /*
-                public bool UserIsInADList(string groupAndUserNames) 
-                {
-                    if (string.IsNullOrWhiteSpace(groupAndUserNames)) return false;
+        public bool UserIsInADList(string groupAndUserNames) 
+        {
+            if (string.IsNullOrWhiteSpace(groupAndUserNames)) return false;
 
-                    foreach (var groupName in groupAndUserNames.Split(',')) // these are the display names not SamAccountNames
-                        if (UserADGroups.Contains(groupName, StringComparer.OrdinalIgnoreCase))
-                            return true;
+            foreach (var groupName in groupAndUserNames.Split(',')) // these are the display names not SamAccountNames
+                if ((UserADGroups != null) && UserADGroups.Contains(groupName, StringComparer.OrdinalIgnoreCase))
+                    return true;
 
-                    return groupAndUserNames.Split(',').Contains(loggedInUserID, StringComparer.OrdinalIgnoreCase); // UserID in MDD
-                }
-        */
-
+            return groupAndUserNames.Split(',').Contains(loggedInUserID, StringComparer.OrdinalIgnoreCase); // UserID in MDD
+        }
         #endregion
 
-
-        public GlobalsService(  MasterDataDbService masterDataDbService,
-                                AppsDbService appsDbService,
-                                NotificationService notificationSvc)
-        {
-            this.masterDataDbService = masterDataDbService;
-            this.appsDbService = appsDbService;
-            this.notificationSvc = notificationSvc;
-        }
 
 
         #region ConnectionStrings
         //        public static Hashtable GlobalsInstances { get; set; } = new Hashtable();
 
-        public static ConnectionStringSettingsCollection ConnectionStrings 
+        public static ConnectionStringSettingsCollection? ConnectionStrings 
         { 
             get; 
             set; 
         }
 
-        public static void Init(    MasterDataDbService masterDataDbService, 
-                                    IConfiguration config)
+        public static void Init(IConfiguration? config)
         {
             if (ConnectionStrings == null )
             {
                 System.Configuration.ConfigurationManager.RefreshSection("connectionStrings");
-                System.Configuration.Configuration conf = System.Configuration.ConfigurationManager.OpenMappedMachineConfiguration(new ConfigurationFileMap(config["MachineConfigPath"]));
+                System.Configuration.Configuration conf = System.Configuration.ConfigurationManager.OpenMappedMachineConfiguration(new ConfigurationFileMap(config?["MachineConfigPath"]));
                 System.Configuration.ConfigurationSection csSection = conf.GetSection("connectionStrings");
                 ConnectionStrings = csSection.CurrentConfiguration.ConnectionStrings.ConnectionStrings;
             }

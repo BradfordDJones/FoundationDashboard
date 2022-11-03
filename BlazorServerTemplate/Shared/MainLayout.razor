@@ -28,8 +28,8 @@
                     <div class="col-8">
                     </div>
                     <div class="col-4" style="display: inline-block; text-align: right; width: 100%">
-                        <img src="@Globals.DataImage" style="height:35px; border-radius: 50%;" />
-                        <span style="padding-left:10px;padding-right:30px;color:white">@Globals.LoggedInUserName</span>
+                        <img src="@globalsService?.DataImage" style="height:35px; border-radius: 50%;" />
+                        <span style="padding-left:10px;padding-right:30px;color:white">@globalsService?.LoggedInUserName</span>
                     </div>
                 </div>
             </ChildContent>
@@ -46,9 +46,7 @@
                 <RadzenPanelMenu style="height: 100%; background-color: #346abd;">
                         <ChildContent>
                         <RadzenPanelMenuItem Text="Index" Path="/"  />
-                        <RadzenPanelMenuItem Text="Counter" Path="/counter" />
                         <RadzenPanelMenuItem Text="Control Test Host" Path="/controltesthost" />
-                        <RadzenPanelMenuItem Text="Dashboard" Path="/bucketdashboard" />
                         <RadzenPanelMenuItem Text="Process Charts" Path="/processcharts" />
                     </ChildContent>
                     </RadzenPanelMenu>

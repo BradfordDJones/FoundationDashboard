@@ -2,41 +2,30 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using BlazorServerTemplate.Models;
+using BlazorServerTemplate.Models.Bucket;
 
 namespace BlazorServerTemplate.Data
 {
-    public partial class AppsDbContext : DbContext
+    public partial class BucketDbContext : DbContext
     {
-        public AppsDbContext()
+        public BucketDbContext()
         {
         }
 
-        public AppsDbContext(DbContextOptions<AppsDbContext> options) : base(options)
+        public BucketDbContext(DbContextOptions<BucketDbContext> options) : base(options)
         {
         }
-
-        public virtual DbSet<AppEventLogOld>? AppEventLogs { get; set; } = null!;
-
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(
-                    "Server = APPSTSTDB; Initial Catalog = Bucket; Persist Security Info = True; Integrated Security = SSPI;");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AppEventLogOld>(entity => 
+            modelBuilder.Entity<AppEventLog>(entity => 
             {
                 entity.HasNoKey();
-
                 entity.ToTable("AppEventLog");
-
                 entity.Property(e => e.AppName).HasMaxLength(250);
             });
 
@@ -44,6 +33,8 @@ namespace BlazorServerTemplate.Data
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        
+        public virtual DbSet<AppEventLog>? AppEventLogs { get; set; } = null!;
     }
 }
 

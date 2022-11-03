@@ -9,7 +9,7 @@ namespace BlazorServerTemplate.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await Task.Run(() => { });
+            await base.OnInitializedAsync();
         }
 
         void OnButtonClick()
@@ -20,7 +20,19 @@ namespace BlazorServerTemplate.Pages
         {
             this.text = this.text == "True" ? "False" : "True";
         }
+
+        protected override Task OnAfterRenderAsync(bool firstRender)
+        {
+            return base.OnAfterRenderAsync(firstRender);
+        }
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+        }
+
+        protected override bool ShouldRender()
+        {
+            return base.ShouldRender();
+        }
     }
-
-
 }

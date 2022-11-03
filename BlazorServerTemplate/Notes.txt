@@ -24,3 +24,42 @@ Scaffold-DbContext "Data Source=APPSTSTDB;Initial Catalog=Bucket;Integrated Secu
 Scaffold-DbContext "Server= Monster;Database=AttorneyCharts;Trusted_Connection=True;" 
 Microsoft.EntityFrameworkCore.SqlServer -OutputDir 
 Models -Tables Clients, Matters, MatterTypes, Persons, PracticeTeams, TimeEntries
+
+https://marketplace.visualstudio.com/items?itemName=ErikEJ.EFCorePowerTools
+
+
+https://www.entityframeworktutorial.net/entityframework6/create-entity-data-model.aspx
+https://www.c-sharpcorner.com/article/blazor-crud-app-using-entity-framework-core-in-net-5/
+https://www.c-sharpcorner.com/article/entity-framework-core-6-with-database-first/
+
+
+https://entityframeworkcore.com/knowledge-base/59338772/scaffold-dbcontext-stored-procedures-only-in-ef-core
+
+---------------------
+It is possible to call a raw SQL using ExecuteSqlCommand. So code to call stored procedure would be look like that:
+context.Database.ExecuteSqlCommand("YourStoredProcedure @p0, @p1", 
+    parameters: new[] { "Joseph", "Gates" });
+
+
+---------------------
+
+Raw SQL queries can be used to execute a stored procedure.
+var user = "johndoe";
+
+var blogs = context.Blogs
+    .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser {0}", user)
+    .ToList();
+
+---------------------
+
+The following example uses a raw SQL query that selects from a Table-Valued Function (TVF), then disables change tracking with the call to AsNoTracking:
+var searchTerm = ".NET";
+
+var blogs = context.Blogs
+    .FromSqlInterpolated($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+    .AsNoTracking()
+    .ToList();
+
+---------------------
+
+exec csp_GetFoundationBucketData

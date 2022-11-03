@@ -1,24 +1,20 @@
-﻿using BlazorServerTemplate.Models.AppsDb;
-using BlazorServerTemplate.Services;
+﻿using BlazorServerTemplate.Services;
 using Microsoft.AspNetCore.Components;
+using BlazorServerTemplate.Models.Bucket;
 
 namespace BlazorServerTemplate.Pages
 {
     public partial class ProcessCharts : ComponentBase
     {
         [Inject]
-        protected GlobalsService? Globals { get; set; }
+        protected BucketService? appsDbService { get; set; }
 
-//        private BucketAppEventLog[]? durations;
-//        private WeatherForecast[]? forecasts;
+        public List<AppEventLog>? durations;
 
-        protected override async Task OnInitializedAsync()
+        protected override Task OnInitializedAsync()
         {
-            await Task.Run(() => { });
-
-//            durations = await Globals.GetDurationsAsync();
-//            forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-
+            durations = appsDbService?.GetEventLogRecords(1000);
+            return Task.CompletedTask;
         }
     }
 }

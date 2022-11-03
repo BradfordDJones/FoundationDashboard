@@ -35,18 +35,18 @@ namespace BlazorServerTemplate
 
             //local databases
             builder.Services.AddScoped<GlobalsService>();
-            builder.Services.AddScoped<AppsDbService>();
-            builder.Services.AddScoped<MasterDataDbService>();
+            builder.Services.AddScoped<BucketService>();
+            builder.Services.AddScoped<TSMDDService>();
+            builder.Services.AddScoped<FoundationTSService>();
 
-            builder.Services.AddDbContext<MasterDataDbContextOld>(options => {
+            builder.Services.AddDbContext<TSMDDDbContext>(options => {
                 options.UseSqlServer("Data Source=MasterDataTSTDB;Initial Catalog=TSMDD;Trusted_Connection=True;");});
 
-            builder.Services.AddDbContext<FoundationTSContext>(options => {
+            builder.Services.AddDbContext<FoundationTSDbContext>(options => {
                 options.UseSqlServer("Data Source=MasterDataTSTDB;Initial Catalog=FoundationTS;Trusted_Connection=True;");});
 
-            builder.Services.AddDbContext<AppsDbContext>(options => {
+            builder.Services.AddDbContext<BucketDbContext>(options => {
                 options.UseSqlServer("Data Source=AppsTSTDB;Initial Catalog=Bucket;Trusted_Connection=True;");});
-
 
             var app = builder.Build();
 

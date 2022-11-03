@@ -1,32 +1,30 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using BlazorServerTemplate.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.Authorization;
 using Radzen;
 using Radzen.Blazor;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Configuration;
-using BlazorServerTemplate.Services;
-using System.Net.WebSockets;
 
 namespace BlazorServerTemplate.Shared
 {
     public partial class MainLayoutComponent: LayoutComponentBase
     {
         [Inject]
-        protected AuthenticationStateProvider AuthenticationStateProvider { get; set; }
-
-
-        [Inject]
-        protected GlobalsService Globals { get; set; }
+        protected AuthenticationStateProvider? AuthenticationStateProvider { get; set; }
 
         [Inject]
-        protected MasterDataDbService MasterDataDb { get; set; }
+        protected GlobalsService? globalsService { get; set; }
 
         [Inject]
-        protected IConfiguration Config { get; set; }
+        protected BucketService? bucketService { get; set; }
+        
+        [Inject]
+        protected FoundationTSService? foundationTSService { get; set; }
+
+        [Inject]
+        protected TSMDDService? tsmddService { get; set; }
+
+        [Inject]
+        protected IConfiguration? Config { get; set; }
 
         [Inject]
         protected NavigationManager? UriHelper { get; set; }
@@ -45,23 +43,24 @@ namespace BlazorServerTemplate.Shared
         protected RadzenBody? body0;
         protected RadzenSidebar? sidebar0;
 
-
-        protected async System.Threading.Tasks.Task SidebarToggle0Click(dynamic args)
+        protected async Task SidebarToggle0Click(dynamic args)
         {
             await InvokeAsync(() => { sidebar0?.Toggle(); });
-
             await InvokeAsync(() => { body0?.Toggle(); });
         }
         
-        protected override async System.Threading.Tasks.Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
-            AuthenticationState state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            Globals.LoggedInUserID = state.User.Identity.Name;
-            GlobalsService.Init(
-                MasterDataDb,
-                //, ExpenseReclassDb,
-                Config
-                );
+            if (AuthenticationStateProvider !=  null)
+            {
+                AuthenticationState? state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                if (globalsService != null)
+                {
+                    globalsService.LoggedInUserID = state?.User?.Identity?.Name;
+                }
+            }
+
+            GlobalsService.Init(Config);
         }
     }
 }
