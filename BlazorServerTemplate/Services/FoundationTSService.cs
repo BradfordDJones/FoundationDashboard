@@ -25,16 +25,23 @@ namespace BlazorServerTemplate.Services
         private readonly FoundationTSDbContext context;
         private readonly IConfiguration config;
 
-        FoundationTSDbContext Context
+        FoundationTSDbContext? Context
         {
             get { return this.context; }
         }
 
-        public FoundationTSService(FoundationTSDbContext context, IConfiguration config)
+        public FoundationTSService(
+            FoundationTSDbContext context,
+            IConfiguration config)
         {
             this.context = context;
             this.config = config;
             Context.Database.SetCommandTimeout(int.Parse(this.config["CommandTimeout"]));
+        }
+
+        public Settings GetSettingsRecord()
+        {
+            return Context.Settings.ToList().FirstOrDefault();
         }
     }
 }

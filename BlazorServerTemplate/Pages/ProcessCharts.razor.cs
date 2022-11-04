@@ -9,12 +9,11 @@ namespace BlazorServerTemplate.Pages
         [Inject]
         protected BucketService? appsDbService { get; set; }
 
-        public List<AppEventLog>? durations;
+        public List<AppEventLog>? durations = null;
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
-            durations = appsDbService?.GetEventLogRecords(1000);
-            return Task.CompletedTask;
+            durations = appsDbService?.GetEventLogRecords(5000);
         }
     }
 }

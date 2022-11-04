@@ -39,6 +39,7 @@ namespace BlazorServerTemplate
             builder.Services.AddScoped<TSMDDService>();
             builder.Services.AddScoped<FoundationTSService>();
 
+
             builder.Services.AddDbContext<TSMDDDbContext>(options => {
                 options.UseSqlServer("Data Source=MasterDataTSTDB;Initial Catalog=TSMDD;Trusted_Connection=True;");});
 

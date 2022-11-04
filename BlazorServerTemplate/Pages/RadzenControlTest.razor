@@ -2,8 +2,7 @@
 
 
 
-<div style="border:thick">
-
+<div>
     <h3>RadzenControlTest</h3>
     <br />
     <RadzenButton Name="rTextBoxFlip" Text="Flip Visible!" Click=@OnButtonClick />
@@ -11,5 +10,6 @@
     <RadzenButton Name="rTextBoxSet" Text="Set Text!" Click=@SetText />
     <hr />
     <RadzenTextBox Name="rTextBox" Visible=@visible @bind-Value=@text />
-
+    <hr />
+    <div class="spinner"></div>
 </div>
