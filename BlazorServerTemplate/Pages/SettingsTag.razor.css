@@ -1,0 +1,65 @@
+﻿.spinner {
+    border: 16px solid silver;
+    border-top: 16px solid #337AB7;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1000ms linear infinite;
+    top: 40%;
+    left: 5%;
+    position: absolute;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+div {
+    color: white;
+}
+
+.my-center
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row-height {
+    height: 50px;
+}
+.my-width {
+    width: 200px;
+}
+
+.testborder {
+    border: 1px solid blue;
+}
+
+.gfg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.gfr {
+    align-items: center;
+    text-align:right;
+}
+.gfl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}

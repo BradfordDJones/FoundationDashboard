@@ -36,12 +36,20 @@ namespace BlazorServerTemplate.Services
         {
             this.context = context;
             this.config = config;
-            Context.Database.SetCommandTimeout(int.Parse(this.config["CommandTimeout"]));
+            Context?.Database.SetCommandTimeout(int.Parse(this.config["CommandTimeout"]));
         }
 
-        public Settings GetSettingsRecord()
+        public async Task<Settings?> GetSettingsRecordAsync()
         {
-            return Context.Settings.ToList().FirstOrDefault();
+            Settings? settingsRecord = null;
+            if (Context != null) settingsRecord = await Context.Settings.Take(1).FirstOrDefaultAsync();
+            return settingsRecord;
+        }
+
+        internal Task SaveSettingsRecordAsync(Settings? settingsRecord)
+        {
+            Context?.SaveChanges();
+            return Task.CompletedTask;
         }
     }
 }

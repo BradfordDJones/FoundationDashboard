@@ -1,6 +1,8 @@
 ﻿using BlazorServerTemplate.Services;
 using Microsoft.AspNetCore.Components;
 using BlazorServerTemplate.Models.FoundationTS;
+using Microsoft.AspNetCore.Components.Web;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BlazorServerTemplate.Pages
 {
@@ -9,31 +11,22 @@ namespace BlazorServerTemplate.Pages
         [Inject]
         protected FoundationTSService? foundationTSService { get; set; }
 
-        public string? PartyStatusCodeCountLimit { 
-            get { return settingsRecord?.PartyStatusCodeCountLimit.ToString(); }
-        }
-        public string? ProcessTimeEntries {
-            get { return settingsRecord?.ProcessTimeEntries.ToString(); }
-        }
-        public string? ProcessImages {
-            get { return settingsRecord?.ProcessImages.ToString(); }
-        }
-        public string? RelatedPartyCountLimit {
-            get { return settingsRecord?.RelatedPartyCountLimit.ToString();  }
-        }
-        public string? MatterDateLimit {
-            get { return settingsRecord?.MatterDateLimit.ToString();  }
-        }
-        public string? TimeEntryBeginDate {
-            get { return settingsRecord?.TimeEntryBeginDate.ToString();  }
-        }
-
-        public Settings? settingsRecord = null;
+        public Settings? rec = null;
 
         protected override async Task OnInitializedAsync()
         {
-            settingsRecord = foundationTSService?.GetSettingsRecord();
-            await base.OnInitializedAsync();
+            rec = await foundationTSService!.GetSettingsRecordAsync();
+        }
+
+        protected async Task Save(MouseEventArgs args)
+        {
+            await foundationTSService!.SaveSettingsRecordAsync(rec);
+        }
+
+        protected async Task Cancel(MouseEventArgs args)
+        {
+            rec = await foundationTSService!.GetSettingsRecordAsync();
+            StateHasChanged();
         }
     }
 }

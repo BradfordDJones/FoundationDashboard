@@ -1,29 +1,46 @@
-﻿<h3 style="align-content:center">Settings</h3>
+﻿@if (rec == null) 
+{
+    <div class="spinner"></div>
+}
+else 
+{
 <div>
     <div style="margin-top: 10px" class="row">
         <div class="col-md-6">
-            <RadzenCard style="text-align: center">
-                <ChildContent>
-                    <div class="row">
-                        <div class="col-6">PartyStatusCodeCountLimit</div>
-                        <div class="col-6"><RadzenLabel Name="PartyStatusCodeCountLimit" Text=@PartyStatusCodeCountLimit /></div></div>
-                    <div class="row">
-                        <div class="col-6">ProcessTimeEntries</div>
-                        <div class="col-6"><RadzenLabel Name="ProcessTimeEntries" Text=@ProcessTimeEntries /></div></div>
-                    <div class="row">
-                        <div class="col-6">ProcessImages</div>
-                        <div class="col-6"><RadzenLabel Name="ProcessImages" Text=@ProcessImages /></div></div>
-                    <div class="row">
-                        <div class="col-6">RelatedPartyCountLimit</div>
-                        <div class="col-6"><RadzenLabel Name="RelatedPartyCountLimit" Text=@RelatedPartyCountLimit /></div></div>
-                    <div class="row">
-                        <div class="col-6">MatterDateLimit</div>
-                        <div class="col-6"><RadzenLabel Name="MatterDateLimit" Text=@MatterDateLimit /></div></div>
-                    <div class="row">
-                        <div class="col-6">TimeEntryBeginDate</div>
-                        <div class="col-6"><RadzenLabel Name="TimeEntryBeginDate" Text=@TimeEntryBeginDate /></div></div>
-                </ChildContent>
+            <div>
+            <RadzenCard>
+                        <div class="row row-height testborder my-center">
+                        <div class="col-6"><div style="text-align: right;" class="testborder">Party Status Code Limit</div></div>
+                        <div class="col-6"><RadzenNumeric TValue="int" Class="my-width" @bind-Value=@rec.PartyStatusCodeCountLimit /></div>
+                        </div>
+                    <div class="row row-height testborder">
+                        <div class="col-6 gfr">Related Party Limit</div>
+                        <div class="col-6"><RadzenNumeric TValue="int" Class="my-width" @bind-Value=@rec.RelatedPartyCountLimit /></div>
+                    </div>
+                    <div class="row row-height testborder">
+                        <div class="col-6 gfr">Matter Date Limit</div>
+                        <div class="col-6"><RadzenDatePicker DateFormat="d" Class="my-width" TValue="DateTime?" ShowTime="false" @bind-Value=@rec.MatterDateLimit /></div>
+                    </div>
+                    <div class="row row-height testborder">
+                        <div class="col-6 gfr">Time Entry Begin Date</div>
+                        <div class="col-6"><RadzenDatePicker DateFormat="d" Class="my-width" TValue="DateTime?" ShowTime="false" @bind-Value=@rec.TimeEntryBeginDate /></div>
+                    </div>
+                    <div class="row row-height testborder">
+                        <div class="col-6 gfr">Process Time Entries</div>
+                        <div class="col-6"><RadzenCheckBox TValue="bool?" @bind-Value=@rec.ProcessTimeEntries /></div>
+                    </div>
+                    <div class="row row-height testborder">
+                        <div class="col-6 gfr">Process Images</div>
+                        <div class="col-6"><RadzenCheckBox TValue="bool?" @bind-Value=@rec.ProcessImages /></div>
+                    </div>
+                    <div class="row row-height testborder">
+                        <div class="col-6 gfg testborder"><RadzenButton style="background-color: #742364;" Click=@Save>Save</RadzenButton></div>
+                        <div class="col-6 gfg testborder"><RadzenButton style="background-color: #742364;" Click=@Cancel>Cancel</RadzenButton></div>
+                    </div>
             </RadzenCard>
+            </div>
+
         </div>
     </div>
 </div>
+}

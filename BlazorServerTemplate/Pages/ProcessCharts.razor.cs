@@ -13,7 +13,10 @@ namespace BlazorServerTemplate.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            durations = appsDbService?.GetEventLogRecords(5000);
+            if (appsDbService != null)
+            {
+                durations = await appsDbService.GetEventLogRecordsAsync(5000);
+            }
         }
     }
 }

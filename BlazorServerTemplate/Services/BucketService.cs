@@ -37,9 +37,15 @@ namespace BlazorServerTemplate.Services
             Context.Database.SetCommandTimeout(int.Parse(this.config["CommandTimeout"]));
         }
 
-        public List<AppEventLog>? GetEventLogRecords(int Days)
+        public async Task<List<AppEventLog>?> GetEventLogRecordsAsync(int Days)
         {
-            return Context?.AppEventLogs?.FromSqlInterpolated($"exec dbo.csp_GetFoundationBucketData @Days={Days}").ToList();
+            List<AppEventLog>? logs = null;
+            await Task.Run(() =>
+            {
+                logs = Context.AppEventLogs?.
+                    FromSqlInterpolated($"exec dbo.csp_GetFoundationBucketData @Days={Days}").ToList();
+            });
+            return logs;
         }
     }
 }
